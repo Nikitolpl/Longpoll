@@ -1,0 +1,43 @@
+import messages
+import vk_info
+import vk_api
+from vk_api.longpoll import VkLongPoll
+import asyncio
+import time
+import json
+
+finished = True
+
+async def online_on(delay, peer_id, command):
+    await asyncio.sleep(delay)
+    global finished
+    if "!н +онлайн" in command:
+        finished = False
+
+async def online(delay, peer_id, command):
+    await asyncio.sleep(delay)
+    global finished
+    if "!н +онлайн" in command:
+        messages.write_msg(peer_id, "✅ Вечный онлайн включён")
+        while finished == False:
+            print("Авто онлайн работает: "+str(vk.method('account.setOnline', {'voip': 0})))
+            time.sleep(180)
+
+async def offline(delay, peer_id, command):
+    await asyncio.sleep(delay)
+    global finished
+    if "!н -онлайн" in command:
+        finished = True
+        messages.write_msg(peer_id, "✅ Вечный онлайн отключён")
+
+def online_info():
+    global finished
+    return finished
+
+with open("database_token.json", "r", encoding="utf-8") as file:
+  data = json.loads(file.read())
+token = data['token']
+vk = vk_api.VkApi(app_id=6146827, token=token)
+
+# Работа с сообщениями
+longpoll = VkLongPoll(vk, wait = 0)

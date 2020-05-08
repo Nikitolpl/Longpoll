@@ -1,8 +1,8 @@
 # Longpoll
 ## Содержание
-1. [Вступление](https://github.com/dutydev/IDM#Вступление)
-2. [Как установить](https://github.com/dutydev/IDM#Как-установить)
-4. [Сигналы](https://github.com/dutydev/IDM#Сигналы)
+1. [Вступление](https://github.com/longpoll#Вступление)
+2. [Как установить](https://github.com/longpoll#Как-установить)
+4. [Команды](https://github.com/longpoll#Сигналы)
 
 ## Вступление
 

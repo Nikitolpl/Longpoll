@@ -59,7 +59,7 @@ async def info(delay, peer_id, command):
         autofr = friends_lp.auto_add_friends_info()
 
         msg_1 = f"""
-        ===LP v 3.0 beta by @nikitolpl(Nikitol)===
+        ===LP v 3.0.1 beta by @nikitolpl(Nikitol)===
 
         💻Дежурный: 
 

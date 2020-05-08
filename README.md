@@ -2,7 +2,7 @@
 ## Содержание
 1. [Вступление](https://github.com/Nikitolpl/Longpoll#Вступление)
 2. [Как установить](https://github.com/Nikitolpl/Longpoll#Как-установить)
-4. [Команды](https://github.com/Nikitolpl/Longpoll#Команды,-доступные-в-longpoll)
+4. [Команды](https://github.com/Nikitolpl/Longpoll#Команды-доступные-в-longpoll)
 
 ## Вступление
 

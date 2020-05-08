@@ -91,8 +91,8 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Longpoll v 3.0 beta"))
-        self.label.setText(_translate("MainWindow", "Longpoll v 3.0 beta by Nikitol"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Longpoll v 3.0.1 beta"))
+        self.label.setText(_translate("MainWindow", "Longpoll v 3.0.1 beta by Nikitol"))
         self.pushButton.setText(_translate("MainWindow", "Сохранить токен"))
         self.pushButton_2.setText(_translate("MainWindow", "Запустить longpoll"))
         self.lineEdit.setText(_translate("MainWindow", "Ваш токен"))

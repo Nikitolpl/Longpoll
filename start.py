@@ -66,6 +66,22 @@ class MyThread_3(Thread):
         asyncio.run(info_lp.read(self.delay, self.peer_id, self.command))
 
 
+class MyThread_4(Thread):
+    """
+    A threading example
+    """
+
+    def __init__(self, delay, peer_id, command):
+        """Инициализация потока"""
+        Thread.__init__(self)
+        self.delay = delay
+        self.peer_id = peer_id
+        self.command = command
+
+    def run(self):
+        asyncio.run(friends_lp.auto_add_friends(self.delay, self.peer_id, self.command))
+
+
 class MyThread_sleep(Thread):
     """
     A threading example
@@ -151,6 +167,7 @@ class MyThread(Thread):
         if test == 0:
             os._exit(1)
 
+
 my_thread = MyThread()
 my_thread.start()
 thread_sleep = MyThread_sleep()
@@ -198,6 +215,8 @@ while True:
                                 my_thread_2.start()
                                 my_thread_3 = MyThread_3(delay, peer_id, command)
                                 my_thread_3.start()
+                                my_thread_4 = MyThread_4(delay, peer_id, command)
+                                my_thread_4.start()
                                 asyncio.run(press_f_1.pressf(delay, peer_id, command))
                                 asyncio.run(press_f_2.pressf(delay, peer_id, command))
                                 asyncio.run(gb.gb(delay, peer_id, command))
@@ -260,6 +279,8 @@ while True:
                                 asyncio.run(sms.add_user(delay, peer_id, command))
                                 asyncio.run(friends_lp.add_friends(delay, peer_id, command))
                                 asyncio.run(friends_lp.del_friends(delay, peer_id, command))
+                                asyncio.run(friends_lp.auto_add_friends_on(delay, command))
+                                asyncio.run(friends_lp.auto_add_friends_off(delay, peer_id, command))
                                 asyncio.run(online.offline(0, event.peer_id, command))
                                 asyncio.run(online.online_on(0, command))
                             except:

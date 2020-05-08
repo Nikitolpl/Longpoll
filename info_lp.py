@@ -1,16 +1,18 @@
-import messages
-import online
-import vk_api
-from vk_api.longpoll import VkLongPoll, VkEventType
-from vk_api.execute import VkFunction
-import re
-import time
 import asyncio
 import json
+import re
+
+import vk_api
+from vk_api.longpoll import VkLongPoll
+
+import messages
+import online
+import friends_lp
 
 finished = True
 
 async def info(delay, peer_id, command):
+    global onl
     await asyncio.sleep(delay)
     if "!н инфа" in command or "!н инфо" in command:
         if peer_id > 2000000000:
@@ -54,6 +56,8 @@ async def info(delay, peer_id, command):
         elif read_info == False:
             read = "✅"
 
+        autofr = friends_lp.auto_add_friends_info()
+
         msg_1 = f"""
         ===LP v 3.0 beta by @nikitolpl(Nikitol)===
 
@@ -61,6 +65,7 @@ async def info(delay, peer_id, command):
 
         Основной токен: ✅
         Вечный онлайн: {onl}
+        Автодобавление в друзья: {autofr}
         Авточиталка спец. чатов: {read}
         Кол-во шабов: {itr}
         Кол-во дшабов: {ditr}

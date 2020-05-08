@@ -8,10 +8,16 @@ import time
 import random
 import json
 
+start = False
+
+
 def add_friend(user_id):
     vk.method('friends.add', {'user_id': user_id})
+
+
 def del_friend(user_id):
     vk.method('friends.delete', {'user_id': user_id})
+
 
 async def add_friends(delay, peer_id, command):
     await asyncio.sleep(delay)
@@ -42,7 +48,7 @@ async def add_friends(delay, peer_id, command):
             name = user[0]['first_name']
             friend = user[0]['friend_status']
             friends = int(friend)
-            user_ids = "id"+str(user_id)
+            user_ids = "id" + str(user_id)
 
         else:
             commands = args[0].lower()
@@ -56,7 +62,7 @@ async def add_friends(delay, peer_id, command):
             name = user[0]['first_name']
             friend = user[0]['friend_status']
             friends = int(friend)
-            user_ids = "id"+str(user_id)
+            user_ids = "id" + str(user_id)
         if friends == 0:
             add_friend(user_id)
 
@@ -88,6 +94,7 @@ async def add_friends(delay, peer_id, command):
 
             messages.write_msg(peer_id, msg_1)
 
+
 async def del_friends(delay, peer_id, command):
     await asyncio.sleep(delay)
     if "!н -др" in command:
@@ -116,7 +123,7 @@ async def del_friends(delay, peer_id, command):
             name = user[0]['first_name']
             friend = user[0]['friend_status']
             friends = int(friend)
-            users_id = "id"+str(user_id)
+            users_id = "id" + str(user_id)
 
         else:
             commands = args[0].lower()
@@ -129,7 +136,7 @@ async def del_friends(delay, peer_id, command):
             name = user[0]['first_name']
             friend = user[0]['friend_status']
             friends = int(friend)
-            users_id = "id"+str(user_id)
+            users_id = "id" + str(user_id)
 
         if friend == 0:
 
@@ -163,6 +170,7 @@ async def del_friends(delay, peer_id, command):
             """.replace('    ', '')
 
             messages.write_msg(peer_id, msg_1)
+
 
 async def add_friends_conversations(delay, peer_id, command):
     user_id = vk.method('users.get', {})
@@ -218,6 +226,55 @@ async def add_friends_conversations(delay, peer_id, command):
 
             messages.write_msg(peer_id, "✅ Все участники беседы добавленны!")
 
+
+async def auto_add_friends_on(delay, command):
+    await asyncio.sleep(delay)
+    global start
+    if "!н +адвд" in command:
+        start = True
+
+
+async def auto_add_friends(delay, peer_id, command):
+    await asyncio.sleep(delay)
+    global start
+    if "!н +адвд" in command:
+        messages.write_msg(peer_id, "✅ Автодобавление в друзья включенно")
+        while start:
+            data: dict = vk.method('friends.getRequests',
+                                   {'offset': 0, 'count': 1000, 'extended': 0,
+                                    'need_mutual': 0, 'out': 0, 'need_viewed': 1})['items']
+            print(data)
+            users: dict = vk.method('users.get', {'user_ids': ",".join([str(i) for i in data])})
+            for user in users:
+                if None != user.get('deactivated', None):
+                    print("Невозможно добавить забаненого пользователя в друзья")
+                    continue
+                try:
+                    vk.method("friends.add", {'user_id': user['id']})
+                    print("Добавлен: " + str(user['id']))
+                except:
+                    print("Ошибка при добавлении в друзья")
+                time.sleep(5)
+            time.sleep(300)
+
+
+async def auto_add_friends_off(delay, peer_id, command):
+    await asyncio.sleep(delay)
+    global start
+    if "!н -адвд" in command:
+        start = False
+        messages.write_msg(peer_id, "✅ Автодобавление в друзья отключено!")
+
+
+def auto_add_friends_info():
+    global start
+    if start:
+        autofr = "✅"
+    elif not start:
+        autofr = "❌"
+    return autofr
+
+
 with open("database_token.json", "r", encoding="utf-8") as file:
     data = json.loads(file.read())
 token = data['token']
@@ -226,4 +283,4 @@ token = data['token']
 vk = vk_api.VkApi(app_id=6146827, token=token)
 
 # Работа с сообщениями
-longpoll = VkLongPoll(vk, wait = 0)
+longpoll = VkLongPoll(vk, wait=0)

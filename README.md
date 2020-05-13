@@ -17,9 +17,9 @@
 ```bash
 pip install vk_api
 ```
-Затем установим библиотеку *PySite2*:
+Затем установим библиотеку *PySide2*:
 ```bash
-pip install PySite2
+pip install PySide2
 ```
 
 Всё нужное установлено! Для запуска программы откройте файл start.py.

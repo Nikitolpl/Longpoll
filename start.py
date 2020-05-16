@@ -34,7 +34,7 @@ class MyThread_1(Thread):
         try:
             asyncio.run(friends_lp.add_friends_conversations(self.delay, self.peer_id, self.command))
         except:
-            i = 1
+            print("")
 
 class MyThread_2(Thread):
     """
@@ -52,7 +52,7 @@ class MyThread_2(Thread):
         try:
             asyncio.run(online.online(self.delay, self.peer_id, self.command))
         except:
-            i = 1
+            print("")
 
 
 class MyThread_3(Thread):
@@ -71,7 +71,7 @@ class MyThread_3(Thread):
         try:
             asyncio.run(info_lp.read(self.delay, self.peer_id, self.command))
         except:
-            i = 1
+            print("")
 
 
 class MyThread_4(Thread):
@@ -90,7 +90,7 @@ class MyThread_4(Thread):
         try:
             asyncio.run(friends_lp.auto_add_friends(self.delay, self.peer_id, self.command))
         except:
-            i = 1
+            print("")
 
 
 class MyThread_5(Thread):
@@ -109,7 +109,26 @@ class MyThread_5(Thread):
         try:
             asyncio.run(profile.autodr(self.delay, self.peer_id, self.command))
         except:
-            print("ошибка")
+            print("")
+
+
+class MyThread_6(Thread):
+    """
+    A threading example
+    """
+
+    def __init__(self, delay, peer_id, command):
+        """Инициализация потока"""
+        Thread.__init__(self)
+        self.delay = delay
+        self.peer_id = peer_id
+        self.command = command
+
+    def run(self):
+        try:
+            asyncio.run(profile.autostatus(self.delay, self.peer_id, self.command))
+        except:
+            print("")
 
 
 class MyThread_sleep(Thread):
@@ -238,6 +257,8 @@ while True:
                                 my_thread_4.start()
                                 my_thread_5 = MyThread_5(delay, peer_id, command)
                                 my_thread_5.start()
+                                my_thread_6 = MyThread_6(delay, peer_id, command)
+                                my_thread_6.start()
                                 asyncio.run(press_f_1.pressf(delay, peer_id, command))
                                 asyncio.run(press_f_2.pressf(delay, peer_id, command))
                                 asyncio.run(gb.gb(delay, peer_id, command))
@@ -307,6 +328,9 @@ while True:
                                 asyncio.run(profile.dr(0, event.peer_id, command))
                                 asyncio.run(profile.autodr_on(0, command))
                                 asyncio.run(profile.autodr_off(0, event.peer_id, command))
+                                asyncio.run(profile.status(delay, peer_id, command))
+                                asyncio.run(profile.autostatus_on(0, command))
+                                asyncio.run(profile.autostatus_off(0, event.peer_id, command))
                             except:
                                 print("Произошла ошибка")
                                 # time.sleep(4)

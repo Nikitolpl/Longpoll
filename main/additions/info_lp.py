@@ -5,10 +5,12 @@ import re
 import vk_api
 from vk_api.longpoll import VkLongPoll
 
-from main.additions import friends_lp, online
+from main.additions import friends_lp, online, profile
 from tools.messages import messages
 
+
 finished = True
+
 
 async def info(delay, peer_id, command):
     global onl
@@ -26,14 +28,14 @@ async def info(delay, peer_id, command):
         historys = vk.method('messages.getHistory', {'count': 1, 'peer_id': peer_id, 'rev': 0})
         count = historys['count']
 
-        with open("../database/database_lp_temp.json", "r", encoding="utf-8") as file:
+        with open("main/database/database_lp_temp.json", "r", encoding="utf-8") as file:
                data = json.loads(file.read())
         data_temp = data['templates']
         itr = 0
         for temp in data_temp:
             itr += 1
 
-        with open("../database/database_lp_dtemp.json", "r", encoding="utf-8") as file:
+        with open("main/database/database_lp_dtemp.json", "r", encoding="utf-8") as file:
                data = json.loads(file.read())
         data_temp = data['templates']
 
@@ -43,19 +45,31 @@ async def info(delay, peer_id, command):
 
         onlines = online.online_info()
 
-        if onlines == True:
+        if onlines:
             onl = "❌"
-        elif onlines == False:
+        elif not onlines:
             onl = "✅"
 
         read_info = finished
 
-        if read_info == True:
+        if read_info:
             read = "❌"
-        elif read_info == False:
+        elif not read_info:
             read = "✅"
 
         autofr = friends_lp.auto_add_friends_info()
+
+        autodrs = profile.info_autodr()
+        if not autodrs:
+            drs = "❌"
+        elif onlines:
+            drs = "✅"
+
+        autostatus = profile.info_autostatus()
+        if autostatus:
+            stats = "❌"
+        elif not autostatus:
+            stats = "✅"
 
         msg_1 = f"""
         ===LP v 3.0 beta by @nikitolpl(Nikitol)===
@@ -66,6 +80,8 @@ async def info(delay, peer_id, command):
         Вечный онлайн: {onl}
         Автодобавление в друзья: {autofr}
         Авточиталка спец. чатов: {read}
+        Автоматическая смена дня рождения: {drs}
+        Автостата: {stats}
         Кол-во шабов: {itr}
         Кол-во дшабов: {ditr}
         
@@ -211,7 +227,7 @@ async def idm(delay, peer_id, command):
 async def chats(delay, peer_id, command):
     await asyncio.sleep(delay)
     if "!н +чат" in command:
-        with open("../database/database_lp.json", "r", encoding="utf-8") as file:
+        with open("main/database/database_lp.json", "r", encoding="utf-8") as file:
                data = json.loads(file.read())
         data_chats = data['chats']
         print(data_chats)
@@ -219,7 +235,7 @@ async def chats(delay, peer_id, command):
         print(data_chats)
         data = {"chats": data_chats}
         print(data)
-        with open("../database/database_lp.json", "w", encoding="utf-8") as file:
+        with open("main/database/database_lp.json", "w", encoding="utf-8") as file:
             file.write(json.dumps(data, ensure_ascii=False, indent=4))
         messages.write_msg(peer_id, "Чат привязан!")
 
@@ -234,7 +250,7 @@ async def read(delay, peer_id, command):
     global finished
     if command == "!н стч":
         messages.write_msg(peer_id, "✅ Авточиталка сообщений в специальных чатах включена!")
-        with open("../database/database_lp.json", "r", encoding="utf-8") as file:
+        with open("main/database/database_lp.json", "r", encoding="utf-8") as file:
                    data = json.loads(file.read())
         data_chats = data['chats']
         while finished == False:
@@ -252,7 +268,7 @@ async def read_off(delay, peer_id, command):
 async def chats_del(delay, peer_id, command):
     await asyncio.sleep(delay)
     if "!н -чат" in command:
-        with open("../database/database_lp.json", "r", encoding="utf-8") as file:
+        with open("main/database/database_lp.json", "r", encoding="utf-8") as file:
                data = json.loads(file.read())
         data_chats = data['chats']
         print(data_chats)
@@ -260,7 +276,7 @@ async def chats_del(delay, peer_id, command):
         print(data_chats)
         data = {"chats": data_chats}
         print(data)
-        with open("../database/database_lp.json", "w", encoding="utf-8") as file:
+        with open("main/database/database_lp.json", "w", encoding="utf-8") as file:
             file.write(json.dumps(data, ensure_ascii=False, indent=4))
         messages.write_msg(peer_id, "Чат отвязан!")
 

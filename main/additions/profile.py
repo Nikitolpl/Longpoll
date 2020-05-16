@@ -4,6 +4,7 @@ import re
 from typing import List, Any, Optional
 import random
 import time
+import datetime
 
 import vk_api
 from vk_api.longpoll import VkLongPoll
@@ -11,6 +12,7 @@ from vk_api.longpoll import VkLongPoll
 from tools.messages import messages
 
 start = False
+finish = True
 
 
 async def dr(delay, peer_id, command):
@@ -77,7 +79,6 @@ async def autodr_on(delay, command):
     await asyncio.sleep(delay)
     if "!н +адр" in command:
         start = True
-        print(1)
 
 
 async def autodr(delay, peer_id, command):
@@ -123,7 +124,7 @@ async def autodr(delay, peer_id, command):
 
             while start:
                 vk.method("account.saveProfileInfo", {'bdate': random.choice(datadr)})
-                print(1)
+                print("Автосмена др работает")
                 time.sleep(sleep)
 
 
@@ -133,6 +134,71 @@ async def autodr_off(delay, peer_id, command):
     if "!н -адр" in command:
         start = False
         messages.write_msg(peer_id, "✅ Автоматическая смена дня рождения выключена")
+
+
+def info_autodr():
+    global start
+    return start
+
+
+async def autostatus_on(delay, command):
+    global finish
+    await asyncio.sleep(delay)
+    if "!н +аст" in command:
+        finish = False
+
+
+async def autostatus(delay, peer_id, command):
+    global finish
+    await asyncio.sleep(delay)
+    if "!н +аст" in command:
+        history: Optional[Any] = vk.method('messages.getHistory',
+                                           {'count': 1, 'peer_id': peer_id, 'rev': 0})
+        msg_text: object = history['items'][0]['text']
+        regexp: str = r"(^[\S]+)|([\S]+)|(\n[\s\S \n]+)"
+        _args: List[Any] = re.findall(str(regexp), str(msg_text))
+        args: List[Any] = []
+        payload: str = ""
+        for arg in _args:
+            if arg[1] != '':
+                args.append(arg[1])
+            if arg[2] != '':
+                payload = arg[2][1:]
+
+        if len(args) == 1:
+            argss = None
+            messages.write_msg(peer_id, "❗ Укажите ваш часовой пояс (разница от UTC (для моск. время - \"3\"))")
+        else:
+            argss = args[1:]
+            hours = ''.join(argss)
+            try:
+                hours = int(hours)
+            except:
+                messages.write_msg(peer_id, "❗ Часовой пояс должен быть в числовом формате.")
+
+            messages.write_msg(peer_id, "✅ Автостатус запущен")
+            while not finish:  # Запускаем бесконечный цикл
+                delta = datetime.timedelta(hours=hours, minutes=0)
+                t = (datetime.datetime.now(datetime.timezone.utc) + delta)  # Присваиваем дату и время переменной «t»
+                nowtime = t.strftime("%H:%M")  # текущее время
+                nowdate = t.strftime("%d.%m.%Y")  # текущее дата
+                on = vk.method("friends.getOnline")  # получаем список id друзей онлайн
+                counted = len(on)  # подсчет кол-ва друзей
+                vk.method("status.set", {"text": nowtime + " ● " + nowdate + " ● " + "Друзей онлайн: " + str(counted)})
+                time.sleep(30)  # анти-каптча. Погружает скрипт в «сон» на 30 секун
+
+
+async def autostatus_off(delay, peer_id, command):
+    global finish
+    await asyncio.sleep(delay)
+    if "!н -аст" in command:
+        finish = True
+        messages.write_msg(peer_id, "✅ Автостатус выключен")
+
+
+def info_autostatus():
+    global finish
+    return finish
 
 
 with open("main/database/database_token.json", "r", encoding="utf-8") as file:

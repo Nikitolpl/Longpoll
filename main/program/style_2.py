@@ -73,8 +73,8 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Longpoll v 3.0.1 beta"))
-        self.label.setText(_translate("Dialog", "Longpoll v 3.0.1 beta by Nikitol"))
+        Dialog.setWindowTitle(_translate("Dialog", "Longpoll v 3.0.3 beta"))
+        self.label.setText(_translate("Dialog", "Longpoll v 3.0.3 beta by Nikitol"))
         self.pushButton.setText(_translate("Dialog", "Перезапустить longpoll"))
         self.pushButton_2.setText(_translate("Dialog", "Отключить longpoll"))
 

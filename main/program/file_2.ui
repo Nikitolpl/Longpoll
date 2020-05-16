@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>837</width>
+    <height>574</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: #3A3A3A;</string>
+  </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>30</y>
+     <width>531</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: #FFEB2C;
+font: 87 18pt &quot;Arial Black&quot;;
+text-size: 500px;</string>
+   </property>
+   <property name="text">
+    <string>Longpoll v 3.0 beta by Nikitol</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>340</y>
+     <width>391</width>
+     <height>181</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+	background-color: rgb(80, 80, 80);
+	color: rgb(255, 235, 44);
+	font: 87 18pt &quot;Arial&quot;;
+	border: none;
+}
+
+QPushButton:hover{
+	background-color: rgb(109, 109, 109);
+	color: rgb(255, 235, 44);
+	font: 87 18pt &quot;Arial&quot;;
+	border: none;
+}
+
+QPushButton:pressed{
+	background-color: rgb(67, 67, 67);
+	color: rgb(207, 207, 207);
+	font: 87 18pt &quot;Arial&quot;;
+	border: none;
+}</string>
+   </property>
+   <property name="text">
+    <string>Перезапустить longpoll</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>340</y>
+     <width>391</width>
+     <height>181</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+	background-color: rgb(80, 80, 80);
+	color: rgb(255, 235, 44);
+	font: 87 18pt &quot;Arial&quot;;
+	border: none;
+}
+
+QPushButton:hover{
+	background-color: rgb(109, 109, 109);
+	color: rgb(255, 235, 44);
+	font: 87 18pt &quot;Arial&quot;;
+	border: none;
+}
+
+QPushButton:pressed{
+	background-color: rgb(67, 67, 67);
+	color: rgb(207, 207, 207);
+	font: 87 18pt &quot;Arial&quot;;
+	border: none;
+}</string>
+   </property>
+   <property name="text">
+    <string>Отключить longpoll</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

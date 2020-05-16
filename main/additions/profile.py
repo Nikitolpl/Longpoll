@@ -43,6 +43,35 @@ async def dr(delay, peer_id, command):
                 messages.write_msg(peer_id, msg)
 
 
+async def status(delay, peer_id, command):
+    await asyncio.sleep(delay)
+    if "!н статус" in command:
+        history: Optional[Any] = vk.method('messages.getHistory',
+                                           {'count': 1, 'peer_id': peer_id, 'rev': 0})
+        msg_text: object = history['items'][0]['text']
+        regexp: str = r"(^[\S]+)|([\S]+)|(\n[\s\S \n]+)"
+        _args: List[Any] = re.findall(str(regexp), str(msg_text))
+        args: List[Any] = []
+        payload: str = ""
+        for arg in _args:
+            if arg[1] != '':
+                args.append(arg[1])
+            if arg[2] != '':
+                payload = arg[2][1:]
+        argss = args[1:]
+        payload = "".join(payload)
+        if payload == "":
+            messages.write_msg(peer_id, "❗ Укажите текст нового статуса (со второй строки)")
+            pass
+        elif payload != "":
+            try:
+                vk.method("status.set", {'text': payload})
+                messages.write_msg(peer_id, "✅ Статус успешно изменён")
+            except:
+                msg = "❗ Ошибка при выполнении смены статуса"
+                messages.write_msg(peer_id, msg)
+
+
 async def autodr_on(delay, command):
     global start
     await asyncio.sleep(delay)

@@ -113,6 +113,7 @@ async def del_sms(delay, peer_id, command):
     if "!н -с" in command:
         history: Optional[Any] = vk.method('messages.getHistory',
                                            dict(count=1, peer_id=peer_id, rev=0))
+        msg_id = history['items'][0]['id']
         msg_text: object = history['items'][0]['text']
         peer_id = peer_id
         user_id: Optional[Any] = vk.method('users.get', {})
@@ -126,14 +127,14 @@ async def del_sms(delay, peer_id, command):
                 args.append(arg[1])
 
         if len(args) == 1:
-            messages.write_msg(peer_id, "... удаляю сообщения ...\nМеня не было в этом чате :)")
+            messages.edit_msg(peer_id, "... удаляю сообщения ...\nМеня не было в этом чате :)", msg_id)
 
             msg_ids: List[str] = []
             mmsg: dict
-            for mmsg in vk_info.get_all_history_gens(peer_id):
+            for mmsg in vk_info.get_all_history_gen_dd(peer_id):
                 if datetime.now().timestamp() - mmsg['date'] > 86400:
                     break
-                if mmsg['from_id'] == user_id and mmsg.get('action', None) == None:
+                if mmsg['from_id'] == user_id and None == mmsg.get('action', None):
                     msg_ids.append(str(mmsg['id']))
             message_id = 0
             try:
@@ -149,21 +150,25 @@ async def del_sms(delay, peer_id, command):
             argss = args[1:]
             count = ''.join(argss)
             count = int(count)
-            messages.write_msg(peer_id, "... удаляю сообщения ...\nМеня не было в этом чате :)")
+            messages.edit_msg(peer_id, "... удаляю сообщения ...\nМеня не было в этом чате :)", msg_id)
             msg_ids = []
-            for mmsg in vk_info.get_all_history_gen(peer_id, count):
+            for mmsg in vk_info.get_all_history_gen_dd(peer_id):
                 if datetime.now().timestamp() - mmsg['date'] > 86400:
                     break
-                if mmsg['from_id'] == user_id and mmsg.get('action', None) == None:
+                if mmsg['from_id'] == user_id and None == mmsg.get('action', None):
                     msg_ids.append(str(mmsg['id']))
+            msg_idss = []
+            for i in range(count):
+                msg_idss.append(msg_ids[i])
             message_id = 0
+            print(msg_idss)
             try:
-                vk.method("messages.delete", {'message_ids': ",".join(msg_ids), 'delete_for_all': 1})
+                vk.method("messages.delete", {'message_ids': ",".join(msg_idss), 'delete_for_all': 1})
                 message_id = messages.write_msg(peer_id, "✅ Сообщения удалены\nЗабудьте об этом дежурном")
             except:
                 message_id = messages.write_msg(peer_id, f"❗ Не удалось удалить сообщения.")
 
-            t = Timer(2, delete_msg(msg_ids), message_id)
+            t = Timer(2, delete_msg(msg_idss), message_id)
             t.start()
 
 

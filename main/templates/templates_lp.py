@@ -56,7 +56,7 @@ async def create_templates(delay, peer_id, command):
                 prov = 0
 
             if prov == 1:
-                with open("../database/database_lp_temp.json", "r", encoding="utf-8") as file:
+                with open("main/database/database_lp_temp.json", "r", encoding="utf-8") as file:
                     data = json.loads(file.read())
                 data_temp = data['templates']
                 print(data_temp)
@@ -69,7 +69,7 @@ async def create_templates(delay, peer_id, command):
                 data_temp.append(data_templ)
                 print(data)
                 data = {"templates": data_temp}
-                with open("../database/database_lp_temp.json", "w", encoding="utf-8") as file:
+                with open("main/database/database_lp_temp.json", "w", encoding="utf-8") as file:
                     file.write(json.dumps(data, ensure_ascii=False, indent=4))
 
                 messages.write_msg(peer_id, f"""✅ Шаблон "{name}" сохранен. """)
@@ -78,7 +78,7 @@ async def create_templates(delay, peer_id, command):
 async def templates(delay, peer_id, command) -> str:
     await asyncio.sleep(delay)
     if "!н мш" in command:
-        with open("../database/database_lp_temp.json", "r", encoding="utf-8") as file:
+        with open("main/database/database_lp_temp.json", "r", encoding="utf-8") as file:
             data = json.loads(file.read())
         data_temp = data['templates']
 
@@ -125,7 +125,7 @@ async def one_templates(delay, peer_id, command) -> str:
                 prov = 0
 
             if prov == 1:
-                with open("../database/database_lp_temp.json", "r", encoding="utf-8") as file:
+                with open("main/database/database_lp_temp.json", "r", encoding="utf-8") as file:
                     data = json.loads(file.read())
                 data_temp = data['templates']
 
@@ -161,7 +161,7 @@ async def delete_templates(delay, peer_id, command) -> str:
 
             name = " ".join(argss)
 
-            with open("../database/database_lp_temp.json", "r", encoding="utf-8") as file:
+            with open("main/database/database_lp_temp.json", "r", encoding="utf-8") as file:
                 data = json.loads(file.read())
             data_temp = data['templates']
             prov = 0
@@ -171,7 +171,7 @@ async def delete_templates(delay, peer_id, command) -> str:
                     data_temp.remove(temp)
 
                     data = {"templates": data_temp}
-                    with open("../database/database_lp_temp.json", "w", encoding="utf-8") as file:
+                    with open("main/database/database_lp_temp.json", "w", encoding="utf-8") as file:
                         file.write(json.dumps(data, ensure_ascii=False, indent=4))
 
                     messages.write_msg(peer_id, f"""✅ Шаблон "{name}" удалён. """)
@@ -219,7 +219,7 @@ async def create_dtemplates(delay, peer_id, command) -> str:
                 prov = 0
 
             if prov == 1:
-                with open("../database/database_lp_dtemp.json", "r", encoding="utf-8") as file:
+                with open("main/database/database_lp_dtemp.json", "r", encoding="utf-8") as file:
                     data = json.loads(file.read())
                 data_temp = data['templates']
                 print(data_temp)
@@ -230,7 +230,7 @@ async def create_dtemplates(delay, peer_id, command) -> str:
                         temp['payload'].append(data_msg)
                         print(data_temp)
                         data = {"templates": data_temp}
-                        with open("../database/database_lp_dtemp.json", "w", encoding="utf-8") as file:
+                        with open("main/database/database_lp_dtemp.json", "w", encoding="utf-8") as file:
                             file.write(json.dumps(data, ensure_ascii=False, indent=4))
 
                         messages.write_msg(peer_id, f"""✅ В дшаб "{name}" был добавлен новый элемент. """)
@@ -245,7 +245,7 @@ async def create_dtemplates(delay, peer_id, command) -> str:
                     data_temp.append(data_templ)
                     print(data)
                     data = {"templates": data_temp}
-                    with open("../database/database_lp_dtemp.json", "w", encoding="utf-8") as file:
+                    with open("main/database/database_lp_dtemp.json", "w", encoding="utf-8") as file:
                         file.write(json.dumps(data, ensure_ascii=False, indent=4))
 
                     messages.write_msg(peer_id, f"""✅ Шаблон "{name}" сохранен. """)
@@ -285,7 +285,7 @@ async def dtemplate(delay, peer_id, command) -> str:
                 prov = 0
 
             if prov == 1:
-                with open("../database/database_lp_dtemp.json", "r", encoding="utf-8") as file:
+                with open("main/database/database_lp_dtemp.json", "r", encoding="utf-8") as file:
                     data = json.loads(file.read())
                 data_temp = data['templates']
 
@@ -331,7 +331,7 @@ async def red_dtemplates(delay, peer_id, command) -> str:
                 prov = 0
 
             if prov == 1:
-                with open("../database/database_lp_dtemp.json", "r", encoding="utf-8") as file:
+                with open("main/database/database_lp_dtemp.json", "r", encoding="utf-8") as file:
                     data = json.loads(file.read())
                 data_temp = data['templates']
 
@@ -347,7 +347,7 @@ async def red_dtemplates(delay, peer_id, command) -> str:
                         temp['payload'].pop(name_in)
                         print(data_temp)
                         data = {"templates": data_temp}
-                        with open("../database/database_lp_dtemp.json", "w", encoding="utf-8") as file:
+                        with open("main/database/database_lp_dtemp.json", "w", encoding="utf-8") as file:
                             file.write(json.dumps(data, ensure_ascii=False, indent=4))
 
                         messages.write_msg(peer_id, f"""✅ В дшаб "{temp['name']}" был изменён элемент. """)
@@ -392,7 +392,7 @@ async def dele_dtemplates(delay, peer_id, command) -> str:
                 prov = 0
 
             if prov == 1:
-                with open("../database/database_lp_dtemp.json", "r", encoding="utf-8") as file:
+                with open("main/database/database_lp_dtemp.json", "r", encoding="utf-8") as file:
                     data = json.loads(file.read())
                 data_temp = data['templates']
 
@@ -413,7 +413,7 @@ async def dele_dtemplates(delay, peer_id, command) -> str:
                         temp['payload'].pop(name_int)
                         print(data_temp)
                         data = {"templates": data_temp}
-                        with open("../database/database_lp_dtemp.json", "w", encoding="utf-8") as file:
+                        with open("main/database/database_lp_dtemp.json", "w", encoding="utf-8") as file:
                             file.write(json.dumps(data, ensure_ascii=False, indent=4))
 
                         messages.write_msg(peer_id, f"""✅ В дшаб "{temp['name']}" был удалён элемент. """)
@@ -427,7 +427,7 @@ async def dele_dtemplates(delay, peer_id, command) -> str:
 async def dtemplates(delay, peer_id, command) -> str:
     await asyncio.sleep(delay)
     if "!н мдш" in command:
-        with open("../database/database_lp_dtemp.json", "r", encoding="utf-8") as file:
+        with open("main/database/database_lp_dtemp.json", "r", encoding="utf-8") as file:
             data = json.loads(file.read())
         data_temp = data['templates']
 
@@ -474,7 +474,7 @@ async def dtemplates_temp(delay, peer_id, command) -> str:
                 prov = 0
 
             if prov == 1:
-                with open("../database/database_lp_dtemp.json", "r", encoding="utf-8") as file:
+                with open("main/database/database_lp_dtemp.json", "r", encoding="utf-8") as file:
                     data = json.loads(file.read())
                 data_temp = data['templates']
 
@@ -522,7 +522,7 @@ async def delete_dtemplates(delay, peer_id, command) -> str:
                 prov = 0
 
             if prov == 1:
-                with open("../database/database_lp_dtemp.json", "r", encoding="utf-8") as file:
+                with open("main/database/database_lp_dtemp.json", "r", encoding="utf-8") as file:
                     data = json.loads(file.read())
                 data_temp = data['templates']
 
@@ -531,7 +531,7 @@ async def delete_dtemplates(delay, peer_id, command) -> str:
                         data_temp.remove(temp)
 
                         data = {"templates": data_temp}
-                        with open("../database/database_lp_dtemp.json", "w", encoding="utf-8") as file:
+                        with open("main/database/database_lp_dtemp.json", "w", encoding="utf-8") as file:
                             file.write(json.dumps(data, ensure_ascii=False, indent=4))
 
                         messages.write_msg(peer_id, f"""✅ Шаблон "{name}" удалён. """)
